@@ -14,5 +14,11 @@ namespace shire_project.Models
         {
 
         }
+
+        public override string ToString()
+        {
+            return $"ID is {ID}, Name is {Name}";
+        }
+
     }
 }

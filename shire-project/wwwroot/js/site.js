@@ -70,4 +70,4 @@ setInterval(function () {
     //alert('Error: ' + request.responseText);
     //    }
     //});
-}, 1000);
+}, 2000);

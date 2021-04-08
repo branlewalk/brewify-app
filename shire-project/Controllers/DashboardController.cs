@@ -8,12 +8,20 @@ using System.Threading.Channels;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
-
+using Microsoft.Extensions.Logging;
 
 namespace shire_project.Controllers
 {
+
     public class DashboardController : Controller
     {
+        private readonly ILogger<DashboardController> _logger;
+
+        public DashboardController(ILogger<DashboardController> logger)
+        {
+            _logger = logger;
+        }
+
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -23,6 +31,8 @@ namespace shire_project.Controllers
         [HttpGet]
         public string Temp()
         {
+            _logger.LogInformation("Starting Temp");
+
             // Connection Settings...need to change...
             ConnectionFactory factory = new ConnectionFactory();
             factory.Uri = new Uri("amqp://guest:guest@192.168.1.49:5672/");
@@ -40,27 +50,45 @@ namespace shire_project.Controllers
             BasicGetResult result = channel.BasicGet(queueName, noAck);
             if (result == null)
             {
+                _logger.LogInformation("No message available");
                 // No message available
             }
             else
             {
-                var body = JsonSerializer.Deserialize<double[]>(result.Body.ToArray());
+                var body = result.Body.ToArray();
+                _logger.LogInformation($"Retrieving body from RabbitMQ, body is {Encoding.UTF8.GetString(body)}");
+
+                var data = new decimal[3] { 0.0M, 0.0M, 0.0M };
+                try
+                {
+                    data = JsonSerializer.Deserialize<decimal[]>(body);
+                }
+                catch (JsonException e)
+                {
+                    _logger.LogInformation($"Could Not Deserialize {Encoding.UTF8.GetString(body)}");
+                    _logger.LogWarning($"Throwing exception {e}");
+                }
+               
                 var temps = new Temps() {
-                    hlt=Math.Round(body[0], 1),
-                    mlt=Math.Round(body[1], 1),
-                    bk=Math.Round(body[2], 1)};
+                    hlt=Math.Round(data[0], 1),
+                    mlt=Math.Round(data[1], 1),
+                    bk=Math.Round(data[2], 1)};
                 var json = JsonSerializer.Serialize(temps);
+
+                _logger.LogInformation($"Ending Temp, returning json: {json}");
                 return json;
             }
-            return "Cannot read temperatures ";
+
+            _logger.LogInformation($"Ending Temp, returning 'Cannot read temperatures'");
+            return "Cannot read temperatures";
         }
     }
 
     public class Temps
     {
-        public double hlt { get; set; }
-        public double mlt { get; set; }
-        public double bk { get; set; }
+        public decimal hlt { get; set; }
+        public decimal mlt { get; set; }
+        public decimal bk { get; set; }
 
         public override string ToString()
         {

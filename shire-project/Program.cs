@@ -18,7 +18,16 @@ namespace shire_project
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+              .ConfigureLogging(logging =>
+                  {
+                      // clear default logging providers
+                      logging.ClearProviders();
+
+                      // add built-in providers manually, as needed 
+                      logging.AddConsole();
+                      logging.AddDebug();
+                  })
+            .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
