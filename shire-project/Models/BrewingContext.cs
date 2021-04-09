@@ -3,13 +3,13 @@ using shire_project.Models;
 
 namespace shire_project
 {
-    internal class BrewingContext : DbContext
+    public class BrewingContext : DbContext
     {
         public DbSet<Recipes> Recipe { get; set; }
 
-        public BrewingContext(DbContextOptions<BrewingContext> options) : base(options)
+        public BrewingContext(DbContextOptions<BrewingContext>options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿@model shire_project.Models.Recipes
-@{
-    //TODO: Create simple view that has a form and table to add recipes to the DB and show a recipe from the DB.
-}
+@{}
 
 <div>
     <h2>Recipes</h2>
@@ -32,7 +30,6 @@
     @using (Html.BeginForm("ServeRecipe", "Recipes", FormMethod.Post))
             {
                 <span>@Html.Label("Recipe Name: ")@Html.EditorFor(m => m.Name)</span>
-                <span>@Html.Label("Recipe ID  : ")@Html.EditorFor(m => m.ID)</span>
 
                 <input id="Submit" type="submit" value="submit"/>
                 

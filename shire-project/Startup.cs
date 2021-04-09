@@ -27,7 +27,7 @@ namespace shire_project
         {
             services.AddControllersWithViews();
             services.AddDbContext<BrewingContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

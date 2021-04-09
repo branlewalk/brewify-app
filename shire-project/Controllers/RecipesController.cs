@@ -13,12 +13,14 @@ namespace shire_project.Controllers
     public class RecipesController : Controller
     {
         private readonly ILogger<RecipesController> _logger;
+        private readonly BrewingContext _context;
 
-        public RecipesController(ILogger<RecipesController> logger)
+        public RecipesController(ILogger<RecipesController> logger, BrewingContext context)
         {
             _logger = logger;
+            _context = context;
         }
-        // GET: /<controller>/
+
         public IActionResult Index()
         {
             Recipes recipe = new Recipes();
@@ -31,15 +33,14 @@ namespace shire_project.Controllers
         [HttpPost]
         public ActionResult ServeRecipe(Recipes recipe)
         {
+            using (_context)
+            {
+                _context.Recipe.Add(recipe);
+                _context.SaveChanges();
+            }
 
             _logger.LogInformation($"Posting to ServeRecipe, recipe is {recipe}");
             return View("Index", recipe);
         }
-
-
-
-        //TODO: Create POST method to handle serving data from form in View to DB
-
-        //TODO: Create GET method to handle filling data from DB to View
     }
 }
