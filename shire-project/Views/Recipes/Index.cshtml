@@ -1,4 +1,4 @@
-﻿@model shire_project.Models.Recipes
+﻿@model shire_project.Models.Recipe
 @{}
 
 <div>
@@ -18,7 +18,7 @@
                 <span>@Model.Name</span>
             </td>
             <td>
-                <span>@Model.ID</span>
+                <span>@Model.RecipeID</span>
             </td>
         </tr>
 
@@ -27,7 +27,7 @@
 
     <h3> Add Recipe </h3>
     <div>
-    @using (Html.BeginForm("ServeRecipe", "Recipes", FormMethod.Post))
+    @using (Html.BeginForm("ServeRecipe", "Recipe", FormMethod.Post))
             {
                 <span>@Html.Label("Recipe Name: ")@Html.EditorFor(m => m.Name)</span>
 
