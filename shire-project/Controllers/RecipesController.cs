@@ -23,19 +23,19 @@ namespace shire_project.Controllers
 
         public IActionResult Index()
         {
-            Recipes recipe = new Recipes();
+            Recipe recipe = new Recipe();
             recipe.Name = "Belgian Tripel";
-            recipe.ID = 1;
+            recipe.RecipeID = 1;
 
             return View(recipe);
         }
 
         [HttpPost]
-        public ActionResult ServeRecipe(Recipes recipe)
+        public ActionResult ServeRecipe(Recipe recipe)
         {
             using (_context)
             {
-                _context.Recipe.Add(recipe);
+                _context.Recipes.Add(recipe);
                 _context.SaveChanges();
             }
 
