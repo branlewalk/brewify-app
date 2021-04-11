@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace shire_project.Models
 {
@@ -7,7 +8,9 @@ namespace shire_project.Models
 
         //Attributes
         public int BrewSessionStepID { get; set; }
+        [Column(TypeName = "DATETIME")]
         public DateTime Start { get; set; }
+        [Column(TypeName = "DATETIME")]
         public DateTime End { get; set; }
 
         //1:M

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace shire_project.Models
 {
@@ -6,9 +7,12 @@ namespace shire_project.Models
     {
         //Attributes
         public int BrewImageID { get; set; }
-        public string BrewImageName { get; set; }
-        public string BrewImageLocation { get; set; }
-        public string BrewImageDescription { get; set; }
+        [Column(TypeName = "VARCHAR(50)")]
+        public string Name { get; set; }
+        [Column(TypeName = "VARCHAR(250)")]
+        public string Location { get; set; }
+        [Column(TypeName = "VARCHAR(250)")]
+        public string? Description { get; set; }
 
         //M:1
         public virtual ICollection<Recipe> Recipes { get; set; }

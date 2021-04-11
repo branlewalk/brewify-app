@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace shire_project.Models
 {
@@ -8,9 +9,13 @@ namespace shire_project.Models
 
         //Attributes
         public int BrewSessionID { get; set; }
+        [Column(TypeName = "VARCHAR(50)")]
         public string Name { get; set; }
+        [Column(TypeName = "DATETIME")]
         public DateTime Start { get; set; }
+        [Column(TypeName = "DATETIME")]
         public DateTime End { get; set; }
+        [Column(TypeName = "DATETIME")]
         public DateTime Created { get; set; }
 
         //1:M

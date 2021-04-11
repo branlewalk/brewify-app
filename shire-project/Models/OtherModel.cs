@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace shire_project.Models
 {
     public class Other
     {
-        //      other_id INT NOT NULL AUTO_INCREMENT,
-        //other_name VARCHAR(45) NOT NULL,
-        //other_type VARCHAR(10) NOT NULL,
-        //other_use VARCHAR(10) NOT NULL,
 
         //Attributes
         public int OtherID { get; set; }
+        [Column(TypeName = "VARCHAR(50)")]
         public string Name { get; set; }
+        [Column(TypeName = "VARCHAR(50)")]
         public string Type { get; set; }
 
         //M:1

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace shire_project.Models
 {
@@ -8,6 +9,7 @@ namespace shire_project.Models
         public decimal hlt { get; set; }
         public decimal mlt { get; set; }
         public decimal bk { get; set; }
+        [Column(TypeName = "DATETIME")]
         public DateTime Created { get; set; }
 
         //1:M
