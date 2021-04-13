@@ -1,38 +1,51 @@
-﻿@model shire_project.Models.Recipe
-@{}
+﻿@model shire_project.ViewModels.RecipeIndexData
 
-<div>
-    <h2>Recipes</h2>
-    <h3>Current Recipe</h3>
-    <table>
-        <tr>
-            <th>
-                <span>Recipe Name</span>
-            </th>
-            <th>
-                <span>Recipe ID</span>
-            </th>
-        </tr>
-        <tr>
+@{
+    ViewBag.Title = "Recipes";
+}
+
+<h2>Recipes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Style</th>
+        <th>MaltIngredient</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Recipes)
+    {
+        string selectedRow = "";
+        if (item.RecipeID == ViewBag.RecipeID)
+        {
+            selectedRow = "success";
+        }
+        <tr class="@selectedRow">
             <td>
-                <span>@Model.Name</span>
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <span>@Model.RecipeID</span>
+                @Html.DisplayFor(modelItem => item.Style)
+            </td>
+            <td>
+                @{
+                    foreach (var maltIngredient in item.MaltIngredients)
+                    {
+                        @maltIngredient.MaltIngredientID @:  @maltIngredient.Malt.Name <br />
+                    }
+                }
+            </td>
+
+            <td>
+                @Html.ActionLink("Select", "Index", new { id = item.RecipeID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.RecipeID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RecipeID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RecipeID })
             </td>
         </tr>
-
-
-    </table>
-
-    <h3> Add Recipe </h3>
-    <div>
-    @using (Html.BeginForm("ServeRecipe", "Recipe", FormMethod.Post))
-            {
-                <span>@Html.Label("Recipe Name: ")@Html.EditorFor(m => m.Name)</span>
-
-                <input id="Submit" type="submit" value="submit"/>
-                
-            }
-    </div>
-</div>
+    }
+</table>

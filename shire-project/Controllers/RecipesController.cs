@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using shire_project.Models;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using shire_project.ViewModels;
 
 namespace shire_project.Controllers
 {
@@ -21,26 +21,32 @@ namespace shire_project.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public ActionResult Index(int? id)
         {
-            Recipe recipe = new Recipe();
-            recipe.Name = "Belgian Tripel";
-            recipe.RecipeID = 1;
+            var viewModel = new RecipeIndexData();
+            viewModel.Recipes = _context.Recipes
+                .Include(i => i.HopIngredients)
+                .Include(i => i.MaltIngredients)
+                .Include(i => i.YeastIngredients)
+                .Include(i => i.OtherIngredients)
+                .Include(i => i.Style)
+                .OrderBy(i => i.Name);
 
-            return View(recipe);
-        }
+            //if (id != null)
+            //{
+            //    ViewBag.InstructorID = id.Value;
+            //    viewModel.Courses = viewModel.Recipes.Where(
+            //        i => i.ID == id.Value).Single().Courses;
+            //}
 
-        [HttpPost]
-        public ActionResult ServeRecipe(Recipe recipe)
-        {
-            using (_context)
-            {
-                _context.Recipes.Add(recipe);
-                _context.SaveChanges();
-            }
+            //if (courseID != null)
+            //{
+            //    ViewBag.CourseID = courseID.Value;
+            //    viewModel.Enrollments = viewModel.Courses.Where(
+            //        x => x.CourseID == courseID).Single().Enrollments;
+            //}
 
-            _logger.LogInformation($"Posting to ServeRecipe, recipe is {recipe}");
-            return View("Index", recipe);
+            return View(viewModel);
         }
     }
 }
