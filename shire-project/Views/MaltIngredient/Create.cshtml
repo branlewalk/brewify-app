@@ -1,0 +1,49 @@
+﻿@model shire_project.ViewModels.CreateMaltIngredientViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+
+    <div>
+        <h4>Malts</h4>
+        <hr />
+        @Html.ValidationSummary(true, "")
+
+        <div>
+            <h4>Malts</h4>
+            <div>
+                @Html.DropDownListFor(model => model.MaltIngredient.MaltID, new SelectList(Model.Malts, "MaltID", "Name"))
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.MaltIngredient.Quantity)
+            <div>
+                @Html.EditorFor(model => model.MaltIngredient.Quantity)
+                @Html.ValidationMessageFor(model => model.MaltIngredient.Quantity)
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.MaltIngredient.RecipeID)
+            <div>
+                @Html.EditorFor(model => model.MaltIngredient.RecipeID)
+                @Html.ValidationMessageFor(model => model.MaltIngredient.RecipeID)
+            </div>
+        </div>
+        <div>
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -11,6 +11,7 @@
 		<Folder Include="Views\Sessions\" />
 		<Folder Include="Data\" />
 		<Folder Include="ViewModels\" />
+		<Folder Include="Views\MaltIngredient\" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">

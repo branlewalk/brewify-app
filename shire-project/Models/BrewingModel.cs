@@ -225,7 +225,6 @@ namespace shire_project.Models
 
     public class Step
     {
-
         //Attributes
         public int StepID { get; set; }
         [Column(TypeName = "VARCHAR(50)")]

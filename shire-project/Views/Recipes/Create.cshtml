@@ -1,0 +1,61 @@
+﻿@model shire_project.Models.Recipe
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+
+    <div>
+        <h4>Recipe</h4>
+        <hr />
+        @Html.ValidationSummary(true, "")
+
+        <div>
+            @Html.LabelFor(model => model.Name)
+            <div>
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Style.Name)
+            <div>
+                @Html.EditorFor(model => model.Style.Name)
+                @Html.ValidationMessageFor(model => model.Style.Name)
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.BatchSize)
+            <div>
+                @Html.EditorFor(model => model.BatchSize)
+                @Html.ValidationMessageFor(model => model.BatchSize)
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Method)
+            <div>
+                @Html.EditorFor(model => model.Method)
+                @Html.ValidationMessageFor(model => model.Method)
+            </div>
+        </div>
+        <div>
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")*@
